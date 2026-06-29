@@ -2,6 +2,7 @@
 import pathlib
 # dataset loading
 from src.utils import download_dataset
+from src.utils import load_data
 # data handling
 import pandas as pd
 import numpy as np
