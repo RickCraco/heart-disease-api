@@ -6,11 +6,6 @@ from src.utils import load_data
 # data handling
 import pandas as pd
 import numpy as np
-# preprocessing
-from sklearn.preprocessing import StandardScaler
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.pipeline import Pipeline
-from sklearn.compose import ColumnTransformer
 # metrics
 from sklearn.metrics import classification_report
 from sklearn.metrics import roc_auc_score
