@@ -34,7 +34,7 @@ def download_dataset():
         print(f"Error downloading file... {e}")
 
 
-def load_data(file_path: str) -> pd.DataFrame:
+def load_data(file_path: pathlib.Path) -> pd.DataFrame:
     """
     Load the dataset from the given path and return a pandas DataFrame.
 
@@ -45,7 +45,7 @@ def load_data(file_path: str) -> pd.DataFrame:
         pd.DataFrame: the loaded dataset.
     """
     # check if the file already exists
-    if not pathlib.Path(file_path).exists():
+    if not file_path.exists():
         raise FileNotFoundError(f"Dataset not found at {file_path}")
     
     # create df
