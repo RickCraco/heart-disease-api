@@ -20,3 +20,7 @@ from sklearn.model_selection import GridSearchCV
 from xgboost import XGBClassifier
 # logging
 from src.logger import setup_logger
+
+MODEL_FOLDER = pathlib.Path("models")
+DATASET_PATH = pathlib.Path("data/heart_disease.csv")
+LOGS_FILE = pathlib.Path("logs/training.log")
