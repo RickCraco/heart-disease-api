@@ -9,7 +9,7 @@ def download_dataset():
     inside the data\ foulder.
     """
     # check if the file already exists
-    file_path = pathlib.Path("data/heart_disease.csv")
+    file_path = pathlib.Path("data\heart_disease.csv")
 
     if file_path.exists():
         print(f"File already exist: {file_path}")
@@ -31,3 +31,7 @@ def download_dataset():
 
     except requests.exceptions.RequestException as e:
         print(f"Error downloading file... {e}")
+
+
+if __name__ == "__main__":
+    download_dataset()
