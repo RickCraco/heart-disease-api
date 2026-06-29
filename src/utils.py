@@ -1,5 +1,6 @@
 import pathlib
 import requests
+import pandas as pd
 
 DATASET_URL = "https://raw.githubusercontent.com/xpy-10/DataSet/refs/heads/main/heart.csv"
 
@@ -32,6 +33,25 @@ def download_dataset():
     except requests.exceptions.RequestException as e:
         print(f"Error downloading file... {e}")
 
+
+def load_data(file_path: str) -> pd.DataFrame:
+    """
+    Load the dataset from the given path and return a pandas DataFrame.
+
+    Args:
+        file_path (Path): path to the dataset CSV file.
+
+    Returns:
+        pd.DataFrame: the loaded dataset.
+    """
+    # check if the file already exists
+    if not pathlib.Path(file_path).exists():
+        raise FileNotFoundError(f"Dataset not found at {file_path}")
+    
+    # create df
+    df = pd.read_csv(file_path)
+
+    return df
 
 if __name__ == "__main__":
     download_dataset()
