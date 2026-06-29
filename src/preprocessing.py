@@ -1,5 +1,3 @@
-import pandas as pd
-import numpy as np
 from sklearn.base import BaseEstimator
 from sklearn.preprocessing import StandardScaler,OneHotEncoder
 from sklearn.pipeline import Pipeline
