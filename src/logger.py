@@ -9,6 +9,9 @@ def setup_logger(file_path: Path, logger_name: str) -> logging.Logger:
     logger = logging.getLogger(logger_name)
     logger.setLevel(logging.INFO)
 
+    # check if the logs folder exists
+    Path(file_path).parent.mkdir(parents=True, exist_ok=True)
+
     # handler for console and file
     console_handler = logging.StreamHandler()
     file_handler = logging.FileHandler(file_path)
