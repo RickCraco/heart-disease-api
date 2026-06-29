@@ -6,10 +6,10 @@ DATASET_URL = "https://raw.githubusercontent.com/xpy-10/DataSet/refs/heads/main/
 def download_dataset():
     """
     Download the project dataset and saves it
-    inside the data\ foulder.
+    inside the data/ foulder.
     """
     # check if the file already exists
-    file_path = pathlib.Path("data\heart_disease.csv")
+    file_path = pathlib.Path("data/heart_disease.csv")
 
     if file_path.exists():
         print(f"File already exist: {file_path}")
