@@ -1,3 +1,5 @@
+# file path
+import pathlib
 # dataset loading
 from src.utils import download_dataset
 # data handling
@@ -15,6 +17,6 @@ from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
 # model
-import xgboost
+from xgboost import XGBClassifier
 # logging
 from src.logger import setup_logger
