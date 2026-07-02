@@ -13,3 +13,8 @@ class PatientData(BaseModel):
     ExerciseAngina: Literal["Y", "N"]
     Oldpeak: float = Field(ge=-3, le=7)
     ST_Slope: Literal["Up", "Flat", "Down"]
+
+
+class PredictionResponse(BaseModel):
+    prediction: Literal[1,0]
+    predicted_proba: float = Field(ge=0, le=1)
