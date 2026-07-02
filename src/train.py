@@ -67,3 +67,7 @@ def training_pipeline() -> None:
     MODEL_FOLDER.mkdir(parents=True, exist_ok=True)
     joblib.dump(grid_search, MODEL_PATH)
     logger.info("Model saved to %s", MODEL_PATH)
+
+
+if __name__ == "__main__":
+    training_pipeline()
