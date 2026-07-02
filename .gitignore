@@ -7,6 +7,7 @@ data/
 # Model artifacts
 models/*.pkl
 models/*.cbm
+models/*.joblib
 
 # Logs
 logs/
