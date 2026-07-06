@@ -10,6 +10,8 @@ app = FastAPI()
 MODEL_PATH = pathlib.Path("models/xgboost_pipeline.joblib")
 model = joblib.load(MODEL_PATH)
 
+LOGS_FILE = pathlib.Path("logs/prediction_api.log")
+
 @app.post("/predict", response_model=PredictionResponse)
 def make_prediction(patient_data: PatientData) -> PredictionResponse:
     """
@@ -27,6 +29,8 @@ def make_prediction(patient_data: PatientData) -> PredictionResponse:
         PredictionResponse: Binary prediction (0 or 1) and the associated
             probability score in the range [0, 1].
     """
+    logger = setup_logger(LOGS_FILE, "prediction_api")
+
     df = pd.DataFrame([patient_data.model_dump()])
 
     predicted_class = model.predict(df)[0]
