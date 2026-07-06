@@ -31,12 +31,11 @@ def make_prediction(patient_data: PatientData) -> PredictionResponse:
             probability score in the range [0, 1].
     """
     df = pd.DataFrame([patient_data.model_dump()])
-    logger.info("Data loaded and validated correctly: %s df", df)
+    logger.info("Data loaded and validated correctly:\n%s", df)
 
     predicted_class = model.predict(df)[0]
     predicted_proba = model.predict_proba(df)[0][1]
 
-    logger.info("Data classified correctly: predicted class = %s predicted_class ; predicted probability = %s preidicted_proba", 
-        predicted_class, predicted_proba)
+    logger.info("Predicted class: %s, predicted probability: %s", predicted_class, predicted_proba)
 
     return PredictionResponse(prediction=int(predicted_class), predicted_proba=float(predicted_proba))
