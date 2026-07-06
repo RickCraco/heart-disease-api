@@ -27,3 +27,8 @@ def make_prediction(patient_data: PatientData) -> PredictionResponse:
             probability score in the range [0, 1].
     """
     df = pd.DataFrame([patient_data.model_dump()])
+
+    predicted_class = model.predict(df)[0]
+    predicted_proba = model.predict_proba(df)[0][1]
+
+    return PredictionResponse(prediction=int(predicted_class), predicted_proba=float(predicted_proba))
