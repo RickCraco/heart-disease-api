@@ -2,9 +2,8 @@ import pathlib
 import requests
 import pandas as pd
 
-from src.train import DATASET_PATH
-
 DATASET_URL = "https://raw.githubusercontent.com/xpy-10/DataSet/refs/heads/main/heart.csv"
+DATASET_PATH = pathlib.Path("data/heart_disease.csv")
 
 def download_dataset(file_path: pathlib.Path = DATASET_PATH):
     """

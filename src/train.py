@@ -9,9 +9,11 @@ from src.config import PARAM_GRID
 from src.logger import setup_logger
 from src.preprocessing import classification_pipeline
 from src.utils import download_dataset, load_data
+from src.utils import DATASET_PATH
+
 
 MODEL_FOLDER = pathlib.Path("models")
-DATASET_PATH = pathlib.Path("data/heart_disease.csv")
+#DATASET_PATH = pathlib.Path("data/heart_disease.csv")
 LOGS_FILE = pathlib.Path("logs/training.log")
 MODEL_PATH = MODEL_FOLDER / "xgboost_pipeline.joblib"
 
