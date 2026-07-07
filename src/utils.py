@@ -4,14 +4,20 @@ import pandas as pd
 
 DATASET_URL = "https://raw.githubusercontent.com/xpy-10/DataSet/refs/heads/main/heart.csv"
 
-def download_dataset():
+def download_dataset(file_path: pathlib.Path = pathlib.Path("data/heart_disease.csv")):
     """
-    Download the project dataset and saves it
-    inside the data/ foulder.
+    Download the heart disease dataset and save it to disk.
+
+    If the target file already exists, the download is skipped. Otherwise,
+    creates the parent directory, fetches the CSV from ``DATASET_URL``, and
+    writes it to ``file_path``. Network errors are caught and printed without
+    raising.
+
+    Args:
+        file_path (Path): Destination path for the downloaded CSV file.
+            Defaults to ``data/heart_disease.csv``.
     """
     # check if the file already exists
-    file_path = pathlib.Path("data/heart_disease.csv")
-
     if file_path.exists():
         print(f"File already exist: {file_path}")
         return
