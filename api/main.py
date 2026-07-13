@@ -3,6 +3,7 @@ import pathlib
 import pandas as pd
 from api.schemas import PatientData, PredictionResponse
 from fastapi import FastAPI
+from fastapi import HTTPException
 from src.logger import setup_logger
 
 app = FastAPI()
