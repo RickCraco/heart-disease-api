@@ -53,7 +53,7 @@ def test_health_success(client):
 
 @patch("api.main.model", None)
 def test_health_fail(client):
-    """Return 503 if the model is unvailable"""
+    """Return 503 if the model is unavailable"""
     response = client.get("/health")
 
     assert response.status_code == 503
