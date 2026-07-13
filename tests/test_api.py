@@ -1,3 +1,6 @@
+from unittest.mock import patch
+
+
 def test_predict_valid_patient(client, valid_patient):
     """Return 200 and a valid prediction payload for correct input data."""
     response = client.post("/predict", json=valid_patient)
@@ -38,3 +41,19 @@ def test_predict_missing_required_field(client, valid_patient):
     response = client.post("/predict", json=payload)
 
     assert response.status_code == 422
+
+
+def test_health_success(client):
+    """Return 200 when the model is available."""
+    response = client.get("/health")
+
+    assert response.status_code == 200
+    assert response.json() == {"status": "ok"}
+
+
+@patch("api.main.model", None)
+def test_health_fail(client):
+    """Return 503 if the model is unvailable"""
+    response = client.get("/health")
+
+    assert response.status_code == 503
