@@ -8,14 +8,19 @@ from src.logger import setup_logger
 
 app = FastAPI()
 
-# the trained pipeline (preprocessing + XGBoost model) is loaded once at
-# startup and reused for every request, instead of reloading it per call
-MODEL_PATH = pathlib.Path("models/xgboost_pipeline.joblib")
-model = joblib.load(MODEL_PATH)
-
 # dedicated logger for prediction requests, separate from the training logs
 LOGS_FILE = pathlib.Path("logs/prediction_api.log")
 logger = setup_logger(LOGS_FILE, "prediction_api")
+
+# the trained pipeline (preprocessing + XGBoost model) is loaded once at
+# startup and reused for every request, instead of reloading it per call
+MODEL_PATH = pathlib.Path("models/xgboost_pipeline.joblib")
+try:
+    model = joblib.load(MODEL_PATH)
+    logger.info("Model loaded successfully")
+except Exception as e:
+    logger.error(f"Error loading the model: {e}")
+    model = None
 
 @app.post("/predict", response_model=PredictionResponse)
 def make_prediction(patient_data: PatientData) -> PredictionResponse:
@@ -52,3 +57,12 @@ def make_prediction(patient_data: PatientData) -> PredictionResponse:
 
     # cast numpy types (int64/float64) to plain Python types for the response model
     return PredictionResponse(prediction=int(predicted_class), predicted_proba=float(predicted_proba))
+
+
+@app.get("/health")
+def check_model_status():
+    """
+    """
+    if model is not None:
+        return {"status": "ok"}
+    raise HTTPException(status_code=503, detail="Service unavailable")
