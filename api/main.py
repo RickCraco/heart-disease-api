@@ -41,10 +41,14 @@ def make_prediction(patient_data: PatientData) -> PredictionResponse:
 
     # predict() returns the class (0/1), predict_proba() returns [P(class=0), P(class=1)];
     # we only need the probability of class 1 (heart disease present)
-    predicted_class = model.predict(df)[0]
-    predicted_proba = model.predict_proba(df)[0][1]
+    try:
+        predicted_class = model.predict(df)[0]
+        predicted_proba = model.predict_proba(df)[0][1]
 
-    logger.info("Predicted class: %s, predicted probability: %s", predicted_class, predicted_proba)
+        logger.info("Predicted class: %s, predicted probability: %s", predicted_class, predicted_proba)
+    except Exception as e:
+        logger.error(f"Error found: {e}")
+        raise HTTPException(status_code=500, detail="Error during model prediction")
 
     # cast numpy types (int64/float64) to plain Python types for the response model
     return PredictionResponse(prediction=int(predicted_class), predicted_proba=float(predicted_proba))
