@@ -60,8 +60,21 @@ def make_prediction(patient_data: PatientData) -> PredictionResponse:
 
 
 @app.get("/health")
-def check_model_status():
+def check_model_status() -> dict[str, str]:
     """
+    Report whether the prediction service is ready to serve requests.
+
+    Checks that the trained pipeline was loaded successfully at startup,
+    allowing clients and monitoring tools to verify service availability
+    before sending prediction requests.
+
+    Returns:
+        dict[str, str]: A status payload ``{"status": "ok"}`` when the model
+            is available.
+
+    Raises:
+        HTTPException: With status code 503 when the model failed to load and
+            the service cannot serve predictions.
     """
     if model is not None:
         return {"status": "ok"}
