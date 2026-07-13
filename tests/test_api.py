@@ -11,6 +11,8 @@ def test_predict_valid_patient(client, valid_patient):
 
 def test_predict_age_below_minimum(client, make_patient):
     """Return 422 when Age is below the accepted minimum value."""
+    # 422 Unprocessable Entity is the status code FastAPI/Pydantic use
+    # automatically when request data fails schema validation
     response = client.post("/predict", json=make_patient(Age=-1))
 
     assert response.status_code == 422

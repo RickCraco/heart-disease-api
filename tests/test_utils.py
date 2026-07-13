@@ -31,8 +31,7 @@ def test_load_data_missing_file(tmp_path):
 
 @patch("src.utils.requests.get")
 def test_download_dataset_success(mock_get, tmp_path):
-    """
-    """
+    """Download the dataset and save its content to the given file path, using a mocked HTTP GET request."""
     file_path = tmp_path / "heart_disease.csv"
 
     mock_response = MagicMock()

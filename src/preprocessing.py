@@ -3,6 +3,8 @@ from sklearn.preprocessing import StandardScaler,OneHotEncoder
 from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 
+# Column names from the heart disease dataset, grouped by the
+# preprocessing they need before being fed to the classifier.
 NUMERICAL_FEATURES = ["Age", "RestingBP", "Cholesterol", "MaxHR", "Oldpeak", "FastingBS"]
 CATEGORICAL_FEATURES = ["Sex", "ChestPainType", "RestingECG", "ExerciseAngina", "ST_Slope"]
 

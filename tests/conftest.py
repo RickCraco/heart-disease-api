@@ -33,6 +33,8 @@ def make_patient(valid_patient):
     """Return a copy of the valid payload with optional field overrides."""
 
     def _make(**overrides):
+        # merge the two dicts: keys in "overrides" replace the matching keys
+        # coming from "valid_patient", leaving all other fields untouched
         return {**valid_patient, **overrides}
 
     return _make
