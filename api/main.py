@@ -15,6 +15,9 @@ app = FastAPI()
 LOGS_FILE = pathlib.Path("logs/prediction_api.log")
 logger = setup_logger(LOGS_FILE, "prediction_api")
 
+# API_KEY header
+api_key_header = APIKeyHeader(name="X-API-Key")
+
 # the trained pipeline (preprocessing + XGBoost model) is loaded once at
 # startup and reused for every request, instead of reloading it per call
 MODEL_PATH = pathlib.Path("models/xgboost_pipeline.joblib")
