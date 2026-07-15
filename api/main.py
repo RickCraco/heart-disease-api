@@ -49,7 +49,7 @@ def verify_api_key(api_key: str = Depends(api_key_header)):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid API KEY")
 
 
-@app.post("/predict", response_model=PredictionResponse)
+@app.post("/predict", response_model=PredictionResponse, dependencies=[Depends(verify_api_key)])
 def make_prediction(patient_data: PatientData) -> PredictionResponse:
     """
     Predict the likelihood of heart disease for a single patient.
