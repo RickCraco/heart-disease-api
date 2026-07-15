@@ -28,6 +28,27 @@ except Exception as e:
     logger.error(f"Error loading the model: {e}")
     model = None
 
+def verify_api_key(api_key: str = Depends(api_key_header)):
+    """
+    Authenticate an incoming request via its API key header.
+
+    Extracts the ``X-API-Key`` header and compares it against the configured
+    key, allowing the request to proceed only when they match. Intended to be
+    used as a FastAPI dependency to protect endpoints.
+
+    Args:
+        api_key (str): API key provided in the ``X-API-Key`` request header,
+            injected by the ``api_key_header`` dependency.
+
+    Raises:
+        HTTPException: With status code 401 when the provided key does not
+            match the configured API key.
+    """
+    if api_key != settings.api_key:
+        logger.error("Authentication failed, user unauthorized")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid API KEY")
+
+
 @app.post("/predict", response_model=PredictionResponse)
 def make_prediction(patient_data: PatientData) -> PredictionResponse:
     """
