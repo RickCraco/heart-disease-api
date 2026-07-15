@@ -1,13 +1,15 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from api.main import app
+from api.main import app, verify_api_key
 
 
 @pytest.fixture
 def client():
     """HTTP client for testing the FastAPI app without starting a server."""
-    return TestClient(app)
+    app.dependency_overrides[verify_api_key] = lambda: None
+    yield TestClient(app)
+    app.dependency_overrides.clear()
 
 
 @pytest.fixture
