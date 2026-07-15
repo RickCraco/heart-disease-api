@@ -4,7 +4,10 @@ import pandas as pd
 from api.schemas import PatientData, PredictionResponse
 from fastapi import FastAPI
 from fastapi import HTTPException
+from fastapi import Depends, status
+from fastapi.security import APIKeyHeader
 from src.logger import setup_logger
+from api.config import settings
 
 app = FastAPI()
 
