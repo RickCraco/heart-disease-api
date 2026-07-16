@@ -1,0 +1,22 @@
+# Virtual environment
+venv/
+
+# Data
+data/
+
+# environment
+__pycache__/
+*.pyc
+.env
+
+# System
+.DS_Store
+
+# Test
+tests/
+
+# Logs
+logs/
+
+# Git
+.git/
