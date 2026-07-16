@@ -13,6 +13,11 @@ def client():
 
 
 @pytest.fixture
+def auth_client():
+    """HTTP client for testing the FastAPI app with API KEY authentication"""
+    return TestClient(app)
+
+@pytest.fixture
 def valid_patient():
     """A patient payload that passes Pydantic validation."""
     return {
