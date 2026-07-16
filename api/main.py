@@ -3,6 +3,7 @@ import pathlib
 import pandas as pd
 from api.schemas import PatientData, PredictionResponse
 from fastapi import FastAPI
+from fastapi import Request
 from fastapi import HTTPException
 from fastapi import Depends, status
 from fastapi.security import APIKeyHeader
@@ -31,6 +32,13 @@ except Exception as e:
     logger.error(f"Error loading the model: {e}")
     model = None
 
+
+# Rate limit
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+
 def verify_api_key(api_key: str = Depends(api_key_header)):
     """
     Authenticate an incoming request via its API key header.
@@ -53,21 +61,30 @@ def verify_api_key(api_key: str = Depends(api_key_header)):
 
 
 @app.post("/predict", response_model=PredictionResponse, dependencies=[Depends(verify_api_key)])
-def make_prediction(patient_data: PatientData) -> PredictionResponse:
+@limiter.limit("10/minute")
+def make_prediction(request: Request, patient_data: PatientData) -> PredictionResponse:
     """
     Predict the likelihood of heart disease for a single patient.
 
     Accepts validated clinical features, runs them through the trained
     preprocessing and classification pipeline, and returns the predicted
     class together with the estimated probability of heart disease.
+    Requires a valid ``X-API-Key`` header and is rate-limited to 10
+    requests per minute per client IP.
 
     Args:
+        request (Request): Incoming HTTP request; required by the rate
+            limiter to identify the client address.
         patient_data (PatientData): Patient clinical measurements and
             categorical indicators used as model input.
 
     Returns:
         PredictionResponse: Binary prediction (0 or 1) and the associated
             probability score in the range [0, 1].
+
+    Raises:
+        HTTPException: With status code 500 when the model fails during
+            prediction.
     """
     # the model pipeline expects a DataFrame with one row per patient,
     # so the single validated payload is wrapped in a one-row DataFrame
