@@ -6,6 +6,9 @@ from fastapi import FastAPI
 from fastapi import HTTPException
 from fastapi import Depends, status
 from fastapi.security import APIKeyHeader
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.util import get_remote_address
 from src.logger import setup_logger
 from api.config import settings
 
