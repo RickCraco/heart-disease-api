@@ -1,21 +1,25 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from api.main import app, verify_api_key
+from api.main import app, verify_api_key, limiter
 
 
 @pytest.fixture
 def client():
     """HTTP client for testing the FastAPI app without starting a server."""
     app.dependency_overrides[verify_api_key] = lambda: None
+    limiter.enabled = False
     yield TestClient(app)
     app.dependency_overrides.clear()
+    limiter.enabled = True
 
 
 @pytest.fixture
 def auth_client():
     """HTTP client for testing the FastAPI app with API KEY authentication"""
-    return TestClient(app)
+    limiter.enabled = False
+    yield TestClient(app)
+    limiter.enabled = True
 
 @pytest.fixture
 def valid_patient():
