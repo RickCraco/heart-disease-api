@@ -57,3 +57,25 @@ def test_health_fail(client):
     response = client.get("/health")
 
     assert response.status_code == 503
+
+
+def test_wrong_api_key(auth_client, valid_patient):
+    """Return 401 if the API KEY is wrong"""
+    response = auth_client.post("/predict", json=valid_patient, headers={"X-API-Key":"wrong-key"})
+
+    assert response.status_code == 401
+
+
+def test_missing_api_key(auth_client, valid_patient):
+    """Return 401 if the API Key is missing"""
+    response = auth_client.post("/predict", json=valid_patient)
+
+    assert response.status_code == 401
+
+
+@patch("api.main.settings.api_key", "test-key")
+def test_valid_api_key(auth_client, valid_patient):
+    """Return 200 if the API Key is valid"""
+    response = auth_client.post("/predict", json=valid_patient, headers={"X-API-Key": "test-key"})
+
+    assert response.status_code == 200
