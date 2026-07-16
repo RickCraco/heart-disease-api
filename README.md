@@ -8,7 +8,7 @@ A machine learning API that predicts the likelihood of heart disease from patien
 
 This repository builds on the machine learning work carried out for my **Final Year Project (FYP)** at the [University of Hertfordshire](https://www.herts.ac.uk/). The FYP focused on exploring and evaluating models for heart-disease risk prediction from clinical features. This project takes that foundation further by packaging a tuned XGBoost pipeline behind a production-style FastAPI service — including authentication, rate limiting, health checks, automated tests, and Docker deployment — so the research prototype can be exercised as a real inference API.
 
-**FYP repository:** <!-- replace with your FYP repo URL --> `https://github.com/RickCraco/computer-science-project`
+**FYP repository:** [RickCraco/computer-science-project](https://github.com/RickCraco/computer-science-project)
 
 ## Overview
 
@@ -33,7 +33,7 @@ The application trains an XGBoost classifier on a heart disease dataset and expo
 | Machine Learning | scikit-learn, XGBoost, pandas, joblib |
 | Testing | pytest, httpx (via FastAPI TestClient) |
 | Packaging | Docker |
-| Language | Python 3.10+ |
+| Language | Python 3.13 |
 
 ## Project Structure
 
